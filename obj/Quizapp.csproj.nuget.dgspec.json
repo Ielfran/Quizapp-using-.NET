@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\codes\\Quizapp\\Quizapp.csproj": {}
+    "C:\\codes\\Quizapp-using-.NET\\Quizapp.csproj": {}
   },
   "projects": {
-    "C:\\codes\\Quizapp\\Quizapp.csproj": {
+    "C:\\codes\\Quizapp-using-.NET\\Quizapp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\codes\\Quizapp\\Quizapp.csproj",
+        "projectUniqueName": "C:\\codes\\Quizapp-using-.NET\\Quizapp.csproj",
         "projectName": "Quizapp",
-        "projectPath": "C:\\codes\\Quizapp\\Quizapp.csproj",
+        "projectPath": "C:\\codes\\Quizapp-using-.NET\\Quizapp.csproj",
         "packagesPath": "C:\\Users\\gagan\\.nuget\\packages\\",
-        "outputPath": "C:\\codes\\Quizapp\\obj\\",
+        "outputPath": "C:\\codes\\Quizapp-using-.NET\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -49,6 +49,18 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[10.0.1, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

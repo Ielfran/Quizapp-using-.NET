@@ -15,7 +15,8 @@ namespace Quizapp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var allQuestions = _quizService.GetAllQuestions();
+            return View(allQuestions);
         }
 
         [HttpGet]
@@ -30,13 +31,15 @@ namespace Quizapp.Controllers
             var newQuestion = new QuestionModel
             {
                 QuestionText = questionText,
-                Options = new List<string> { option1, option2, option3, option4 },
+                Option1 = option1,
+                Option2 = option2,
+                Option3 = option3,
+                Option4 = option4,
                 CorrectOptionIndex = correctIndex
             };
 
             _quizService.AddQuestion(newQuestion);
-            ViewBag.Message = "Question added successfully!";
-            return View();
+            return RedirectToAction("Index"); 
         }
 
         [HttpGet]
@@ -45,7 +48,8 @@ namespace Quizapp.Controllers
             var question = _quizService.GetRandomQuestion();
             if (question == null)
             {
-                return Content("No questions available. Please add some first.");
+                ViewBag.Error = "No questions found in database.";
+                return View("Index", new List<QuestionModel>());
             }
             return View(question);
         }
@@ -66,6 +70,13 @@ namespace Quizapp.Controllers
             ViewBag.UserChoice = selectedIndex;
             
             return View("Result", question);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            _quizService.DeleteQuestion(id);
+            return RedirectToAction("Index");
         }
     }
 }
