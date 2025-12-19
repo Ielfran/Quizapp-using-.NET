@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "acMmNDLkU2s=",
+  "dgSpecHash": "XmHvPuN4MF0=",
   "success": true,
   "projectFilePath": "C:\\codes\\Quizapp-using-.NET\\Quizapp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gagan\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\gagan\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\10.0.1\\microsoft.aspnetcore.identity.entityframeworkcore.10.0.1.nupkg.sha512",
     "C:\\Users\\gagan\\.nuget\\packages\\microsoft.build\\17.7.2\\microsoft.build.17.7.2.nupkg.sha512",
     "C:\\Users\\gagan\\.nuget\\packages\\microsoft.build.framework\\17.14.28\\microsoft.build.framework.17.14.28.nupkg.sha512",
     "C:\\Users\\gagan\\.nuget\\packages\\microsoft.build.tasks.core\\17.14.28\\microsoft.build.tasks.core.17.14.28.nupkg.sha512",

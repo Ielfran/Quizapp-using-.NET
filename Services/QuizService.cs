@@ -12,9 +12,9 @@ namespace Quizapp.Services
             _context = context;
         }
 
-        public List<QuestionModel> GetAllQuestions()
+        public List<QuestionModel> GetAllQuestions(string userId)
         {
-            return _context.Questions.ToList();
+            return _context.Questions.Where(q => q.UserId == userId).ToList();
         }
 
         public void AddQuestion(QuestionModel question)
@@ -23,29 +23,31 @@ namespace Quizapp.Services
             _context.SaveChanges();
         }
 
-        public QuestionModel? GetRandomQuestion()
+        public QuestionModel? GetRandomQuestion(string userId)
         {
-            var count = _context.Questions.Count();
+            var userQuestions = _context.Questions.Where(q => q.UserId == userId);
+            int count = userQuestions.Count();
+
             if (count == 0) return null;
 
             var random = new Random();
             int skip = random.Next(0, count);
-            
-            return _context.Questions
-                           .OrderBy(q => q.Id)
-                           .Skip(skip)
-                           .Take(1)
-                           .FirstOrDefault();
+
+            return userQuestions
+                .OrderBy(q => q.Id)
+                .Skip(skip)
+                .Take(1)
+                .FirstOrDefault();
         }
-        
+
         public QuestionModel? GetQuestionById(int id)
         {
             return _context.Questions.FirstOrDefault(q => q.Id == id);
         }
 
-        public void DeleteQuestion(int id)
+        public void DeleteQuestion(int id, string userId)
         {
-            var question = _context.Questions.FirstOrDefault(q => q.Id == id);
+            var question = _context.Questions.FirstOrDefault(q => q.Id == id && q.UserId == userId);
             if (question != null)
             {
                 _context.Questions.Remove(question);

@@ -1,43 +1,17 @@
 @model Quizapp.Models.QuestionModel
-
-@{
-    ViewData["Title"] = "Result";
-    bool isCorrect = ViewBag.IsCorrect;
-    int correctIndex = ViewBag.CorrectIndex;
-    int userChoice = ViewBag.UserChoice;
-}
-
+@{ ViewData["Title"] = "Result"; bool isCorrect = ViewBag.IsCorrect; int correct = ViewBag.CorrectIndex; int user = ViewBag.UserChoice; }
 <div class="text-center mt-5">
-    @if (isCorrect)
-    {
-        <h1 class="text-success display-4"><i class="bi bi-check-circle"></i> Correct!</h1>
-    }
-    else
-    {
-        <h1 class="text-danger display-4"><i class="bi bi-x-circle"></i> Wrong!</h1>
-    }
-
+    <h1 class="@(isCorrect ? "text-success" : "text-danger")">@(isCorrect ? "Correct!" : "Wrong!")</h1>
     <div class="card mt-4 mx-auto" style="max-width: 600px;">
         <div class="card-body">
             <h5>@Model.QuestionText</h5>
             <ul class="list-group list-group-flush text-start mt-3">
-                @for (int i = 0; i < Model.Options.Count; i++)
-                {
-                    string cssClass = "";
-                    if (i == correctIndex) { cssClass = "list-group-item-success"; }
-                    else if (i == userChoice && !isCorrect) { cssClass = "list-group-item-danger"; }
-
-                    <li class="list-group-item @cssClass">
-                        @Model.Options[i]
-                        @if (i == correctIndex) { <strong>(Correct Answer)</strong> }
-                    </li>
+                @for (int i=0; i<Model.Options.Count; i++) {
+                    string cls = (i==correct) ? "list-group-item-success" : (i==user && !isCorrect) ? "list-group-item-danger" : "";
+                    <li class="list-group-item @cls">@Model.Options[i] @if(i==correct){<b>(Answer)</b>}</li>
                 }
             </ul>
         </div>
     </div>
-
-    <div class="mt-4">
-        <a asp-action="Play" class="btn btn-primary btn-lg">Next Random Question</a>
-        <a asp-action="Index" class="btn btn-outline-secondary btn-lg">Back to Menu</a>
-    </div>
+    <div class="mt-4"><a asp-action="Play" class="btn btn-primary">Next Question</a> <a asp-action="Index" class="btn btn-secondary">Menu</a></div>
 </div>

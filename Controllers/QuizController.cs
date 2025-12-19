@@ -1,9 +1,12 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Quizapp.Models;
 using Quizapp.Services;
 
 namespace Quizapp.Controllers
 {
+    [Authorize]
     public class QuizController : Controller
     {
         private readonly QuizService _quizService;
@@ -13,17 +16,16 @@ namespace Quizapp.Controllers
             _quizService = quizService;
         }
 
+        private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier);
+
         public IActionResult Index()
         {
-            var allQuestions = _quizService.GetAllQuestions();
-            return View(allQuestions);
+            var questions = _quizService.GetAllQuestions(GetUserId());
+            return View(questions);
         }
 
         [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
         [HttpPost]
         public IActionResult Create(string questionText, string option1, string option2, string option3, string option4, int correctIndex)
@@ -31,24 +33,21 @@ namespace Quizapp.Controllers
             var newQuestion = new QuestionModel
             {
                 QuestionText = questionText,
-                Option1 = option1,
-                Option2 = option2,
-                Option3 = option3,
-                Option4 = option4,
-                CorrectOptionIndex = correctIndex
+                Option1 = option1, Option2 = option2, Option3 = option3, Option4 = option4,
+                CorrectOptionIndex = correctIndex,
+                UserId = GetUserId()
             };
-
             _quizService.AddQuestion(newQuestion);
-            return RedirectToAction("Index"); 
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult Play()
         {
-            var question = _quizService.GetRandomQuestion();
+            var question = _quizService.GetRandomQuestion(GetUserId());
             if (question == null)
             {
-                ViewBag.Error = "No questions found in database.";
+                ViewBag.Error = "No questions found. Add some first!";
                 return View("Index", new List<QuestionModel>());
             }
             return View(question);
@@ -59,23 +58,20 @@ namespace Quizapp.Controllers
         {
             var question = _quizService.GetQuestionById(questionId);
             bool isCorrect = false;
-            
             if (question != null)
             {
                 isCorrect = (question.CorrectOptionIndex == selectedIndex);
                 ViewBag.CorrectIndex = question.CorrectOptionIndex;
             }
-
             ViewBag.IsCorrect = isCorrect;
             ViewBag.UserChoice = selectedIndex;
-            
             return View("Result", question);
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _quizService.DeleteQuestion(id);
+            _quizService.DeleteQuestion(id, GetUserId());
             return RedirectToAction("Index");
         }
     }

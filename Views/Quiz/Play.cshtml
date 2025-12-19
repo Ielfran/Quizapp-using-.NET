@@ -1,31 +1,18 @@
 @model Quizapp.Models.QuestionModel
-
-@{
-    ViewData["Title"] = "Play Quiz";
-}
-
-<div class="card mt-5 shadow-sm">
-    <div class="card-header bg-primary text-white">
-        <h4>Question</h4>
-    </div>
+@{ ViewData["Title"] = "Play"; }
+<div class="card mt-5 shadow">
+    <div class="card-header bg-primary text-white"><h4>@Model.QuestionText</h4></div>
     <div class="card-body">
-        <h3 class="card-title">@Model.QuestionText</h3>
-        <hr />
-        
         <form asp-action="SubmitAnswer" method="post">
             <input type="hidden" name="questionId" value="@Model.Id" />
-            
             <div class="list-group">
-                @for(int i = 0; i < Model.Options.Count; i++)
-                {
+                @for(int i=0; i<Model.Options.Count; i++) {
                     <label class="list-group-item list-group-item-action">
-                        <input class="form-check-input me-1" type="radio" name="selectedIndex" value="@i" required>
-                        @Model.Options[i]
+                        <input class="form-check-input me-2" type="radio" name="selectedIndex" value="@i" required> @Model.Options[i]
                     </label>
                 }
             </div>
-
-            <button type="submit" class="btn btn-primary mt-3">Submit Answer</button>
+            <button type="submit" class="btn btn-primary mt-3 w-100">Submit</button>
         </form>
     </div>
 </div>

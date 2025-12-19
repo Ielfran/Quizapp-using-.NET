@@ -297,3 +297,4 @@ C:\codes\Quizapp-using-.NET\obj\Debug\net10.0\refint\Quizapp.dll
 C:\codes\Quizapp-using-.NET\obj\Debug\net10.0\Quizapp.pdb
 C:\codes\Quizapp-using-.NET\obj\Debug\net10.0\Quizapp.genruntimeconfig.cache
 C:\codes\Quizapp-using-.NET\obj\Debug\net10.0\ref\Quizapp.dll
+C:\codes\Quizapp-using-.NET\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
